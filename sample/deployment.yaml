@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcat-deploy
+  labels:
+    name: tomcat-deploy
+    app: sample-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      name: tomcat-pod
+      app: sample-app
+  template:
+    metadata:
+      name: tomcat-pod
+      labels:
+        name: tomcat-pod
+        app: sample-app
+    spec:
+      containers:
+        - name: tomcat
+          image: dhanrajnath/tomcat
+          ports:
+            - containerPort: 8080
+          env:
+            - name: "TOMCAT_PASSWORD"
+              value: "tomcat"
+            - name: "TOMCAT_USER"
+              value: "admin"
